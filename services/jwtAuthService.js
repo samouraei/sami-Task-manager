@@ -21,12 +21,12 @@ const protect = (model, allowedRoles = []) => {
     // Verify token
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
-    // Check if the token is in Redis
-    const redisToken = await redisSessionClient.get(`user:${decoded.id}:token`);
+    // // Check if the token is in Redis
+    // const redisToken = await redisSessionClient.get(`user:${decoded.id}:token`);
 
-    if (!redisToken || redisToken !== token) {
-      return next(new AppError('Invalid token or session expired.', 401));
-    }
+    // if (!redisToken || redisToken !== token) {
+    //   return next(new AppError('Invalid token or session expired.', 401));
+    // }
 
     // Determine which model to use (User or Admin)
     const currentUser = await model.findById(decoded.id);
